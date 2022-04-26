@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/api-handle-error', [CategoryController::class, 'apiHandleError'])->name('api-handle-error');
+Route::get('/log-to-file-and-slack', [CategoryController::class, 'apiLogErrorToLogFileAndSlack'])->name('categories');

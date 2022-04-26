@@ -50,7 +50,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'slack'],
             'ignore_exceptions' => false,
         ],
 
@@ -69,11 +69,21 @@ return [
 
         'slack' => [
             'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => 'Laravel Log',
-            'emoji' => ':boom:',
-            'level' => env('LOG_LEVEL', 'critical'),
+            'url' => env('LOG_SLACK_WEBHOOK_URL'),// file .env add LOG_SLACK_WEBHOOK_URL -> copy from Slack: Incoming WebHooks app
+            'username' => 'Lara Test Log',
+            'emoji' => ':ghost:',
+            'level' => env('LOG_LEVEL', 'error'), // Log::error -> see below
         ],
+
+        // Log level:
+        //   Log::emergency($message);
+        //   Log::alert($message);
+        //   Log::critical($message);
+        //   Log::error($message);
+        //   Log::warning($message);
+        //   Log::notice($message);
+        //   Log::info($message);
+        //   Log::debug($message);
 
         'papertrail' => [
             'driver' => 'monolog',

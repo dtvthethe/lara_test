@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use DivisionByZeroError;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -43,8 +45,28 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        $this->renderable(function (Throwable $e, $request) {
+            if ($request->is('api/*')) {
+                switch (true) {
+                    case $e instanceof QueryException:
+                        return response()->json([
+                            'message' => 'Cau query sai',
+                            'data' => null,
+                        ], 500);
+
+                    case $e instanceof DivisionByZeroError:
+                        return response()->json([
+                            'message' => 'Chia cho 0',
+                            'data' => null,
+                        ], 500);
+                    
+                    default:
+                        return response()->json([
+                            'message' => $e->getMessage(),
+                            'data' => null,
+                        ], 500);
+                }
+            } 
         });
     }
 }
