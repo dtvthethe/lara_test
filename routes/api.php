@@ -15,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/api-handle-error', [CategoryController::class, 'apiHandleError'])->name('api-handle-error');
+Route::get('/log-to-file-and-slack', [CategoryController::class, 'apiLogErrorToLogFileAndSlack'])->name('categories');
